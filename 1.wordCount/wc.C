@@ -8,17 +8,24 @@
 
 using namespace std;
 int main() {
-	int bytes = 0, words = 0, lines = 0;
+	int words = 0, lines = 0;
 
 	int fd;
-	if ( mkdir("wcreports", S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH ) == 0){
+
+	// first check if wcreports directory already exits
+	struct stat buffer;
+	if ( (stat("wcreports", &buffer) != -1) && (S_ISDIR(buffer.st_mode)) ){
 		fd = open("wcreports/wcreport", O_RDWR | O_CREAT, 0644);
 	}
-	else{
-		cerr << "Error :  wcreports directory not created" << endl; 
-		exit(-1);
+	else{ // create one
+		if ( mkdir("wcreports", S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH ) == 0){
+			fd = open("wcreports/wcreport", O_RDWR | O_CREAT, 0644);
+		}
+		else{
+			cerr << "Error :  wcreports directory not created" << endl; 
+			exit(-1);
+		}
 	}
-	
 		
 
 	if ( fd < 0 ) {
