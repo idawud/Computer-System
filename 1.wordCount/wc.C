@@ -15,6 +15,7 @@ int main() {
 	}
 	
 	string content, sentence;
+
 	do{
 		cout << ">>> ";
 		getline(cin, sentence);
@@ -23,17 +24,14 @@ int main() {
 			++lines;
 		}
 	}while( !sentence.empty());
-		
-	std::string report = "bytes: " + std::to_string(content.length());
-	report += "\nlines: " + std::to_string(lines);
-	
+
 	for( auto ch : content){
-		if( ch == ' ' || ch == '\n'){
-			++words;
-		}
-	}	
- 	
-	report += "\nwords: " + std::to_string(words) + "\n";
+		if( ch == ' ' || ch == '\n'){ ++words; }
+	}
+
+	std::string report = "bytes: " + std::to_string(content.length());
+	report += "\nwords: " + std::to_string(words);
+	report += "\nlines: " + std::to_string(lines); 
 
 	write(fd, report.c_str(), std::strlen(report.c_str()));
 	close(fd); 
